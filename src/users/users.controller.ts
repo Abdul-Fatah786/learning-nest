@@ -11,47 +11,49 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { UsersService } from './users.service';
 
 @Controller('users') // /users
 export class UsersController {
-  /*
-    GET /users
-    GET /users/:id
-    POST /users
-    PUT /users/:id
-    PATCH /users/:id
-    */
+  constructor(private readonly usersService: UsersService) {}
 
   @Get() // /users / ?role
-  getAllUsers(@Query('role') role: "Intern" | "Employee" | "Admin") {
-    if (role) {
-      return `Get all users with role ${role}`;
-    }
-    return 'Get all users';
-  }
-
-  @Get('interns') // /users/interns
-  getAllInterns() {
-    return 'Get all interns';
+  getAllUsers(@Query('role') role?: 'INTERN' | 'ENGINEER' | 'ADMIN') {
+    return this.usersService.getAllUsers(role);
   }
 
   @Get(':id') // /users/:id
   getUserById(@Param('id') id: string) {
-    return { 'Get user by id': id };
+    return this.usersService.getUserById(+id); // Convert id to number
   }
 
   @Post() // /users
-  createUser(@Body() user: {}) {
-    return { 'Created user': user };
+  createUser(
+    @Body()
+    user: {
+      name: string;
+      email: string;
+      role: 'INTERN' | 'ENGINEER' | 'ADMIN';
+    },
+  ) {
+    return this.usersService.createUser(user);
   }
 
   @Patch(':id') // /users/:id
-  updateUser(@Param('id') id: string, @Body() updateUser: {}) {
-    return { 'Updated user': id, updateUser };
+  updateUser(
+    @Param('id') id: string,
+    @Body()
+    updateUser: {
+      name?: string;
+      email?: string;
+      role?: 'INTERN' | 'ENGINEER' | 'ADMIN';
+    },
+  ) {
+    return this.usersService.updateUser(+id, updateUser);
   }
 
   @Delete(':id') // /users/:id
   deleteUser(@Param('id') id: string) {
-    return { 'Deleted user': id };
+    return this.usersService.deleteUser(+id); // Convert id to number
   }
 }
