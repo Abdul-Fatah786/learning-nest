@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable prettier/prettier */
 import {
   Body,
@@ -7,11 +6,15 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user-dto';
+import { UpdateUserDto } from './dto/update-user-dto';
 
 @Controller('users') // /users
 export class UsersController {
@@ -23,37 +26,29 @@ export class UsersController {
   }
 
   @Get(':id') // /users/:id
-  getUserById(@Param('id') id: string) {
-    return this.usersService.getUserById(+id); // Convert id to number
+  getUserById(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.getUserById(id);
   }
 
   @Post() // /users
   createUser(
-    @Body()
-    user: {
-      name: string;
-      email: string;
-      role: 'INTERN' | 'ENGINEER' | 'ADMIN';
-    },
+    @Body(ValidationPipe)
+    createUserDto: CreateUserDto,
   ) {
-    return this.usersService.createUser(user);
+    return this.usersService.createUser(createUserDto);
   }
 
   @Patch(':id') // /users/:id
   updateUser(
-    @Param('id') id: string,
-    @Body()
-    updateUser: {
-      name?: string;
-      email?: string;
-      role?: 'INTERN' | 'ENGINEER' | 'ADMIN';
-    },
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe)
+    updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.updateUser(+id, updateUser);
+    return this.usersService.updateUser(id, updateUserDto);
   }
 
   @Delete(':id') // /users/:id
-  deleteUser(@Param('id') id: string) {
-    return this.usersService.deleteUser(+id); // Convert id to number
+  deleteUser(@Param('id', ParseIntPipe) id: number) {
+    return this.usersService.deleteUser(id);
   }
 }
