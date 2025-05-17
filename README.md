@@ -55,8 +55,7 @@ npx prisma migrate dev --name <name>  # Apply new changes, creates new migration
 
 
 ### 🛠️ Create a Resource in NestJS (With CRUD)
-nest g resource employees
-# This command scaffolds module, controller, and service with CRUD ready setup
+nest g resource employees # This command scaffolds module, controller, and service with CRUD ready setup
 
 
 ### 📝 Notes

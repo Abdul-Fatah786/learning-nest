@@ -10,8 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
-import { Prisma } from '@prisma/client';
-import { Role } from 'generated/prisma';
+import { Prisma, Role } from 'generated/prisma';
 
 @Controller('employees')
 export class EmployeesController {
