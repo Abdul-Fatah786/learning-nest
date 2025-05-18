@@ -63,3 +63,19 @@ nest g resource employees # This command scaffolds module, controller, and servi
 ✅ Make sure to update your .env file with your NeonDB connection string:
 
 DATABASE_URL="postgresql://<user>:<password>@<host>/<db>?schema=public"
+
+
+
+## NestJS - Throttler, Exceptions & Logger
+### 📚 What I Learned
+### ✅ Throttler
+
+Rate Limiting with ThrottlerGuard
+Custom HTTP Exceptions (e.g., UserBlockedException)
+Global Exception Filter implementation
+NestJS Logger usage in controllers and services
+Custom Logger Service for better formatting
+
+## Conclusion
+By combining these three core features—Throttler, Exception Handling, and Logger—we can create more robust, secure, and maintainable NestJS applications.
+
